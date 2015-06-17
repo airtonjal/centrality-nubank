@@ -20,3 +20,14 @@ The third and final part is to add another endpoint to flag a customer node as "
 F(k) = (1 - (1/2)^k)
 
 where k is the length of the shortest path from the "fraudulent" customer to the customer in question.
+
+# Initial solution / brainstorm
+
+- Read input file
+- Implement [Floyd-Warshall algorithm](https://en.wikipedia.org/wiki/Floyd%E2%80%93Warshall_algorithm). Maybe could be simplified since edge weight == 1
+- Each time a vertex is added, the closeness of each vertex must be recalculated. Can we optmize it?? 
+- When a fraud is detected, must recalculate closeness of each vertex. Can we optimize it??
+
+Other ideas:
+- Use lazy evaluation??
+- Djikstra Algorithm
