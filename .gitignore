@@ -1,3 +1,27 @@
-.idea/
 target/
-project/target/
+*.iml
+*.ipr
+*.iws
+.idea/
+.idea_modules/
+
+.project
+
+# OS X
+Icon
+Thumbs.db
+.DS_Store
+
+# SASS
+*.sass-cache
+
+# Gradle
+build/
+.gradle/
+out/
+
+.history
+
+project/project
+
+woas.spec

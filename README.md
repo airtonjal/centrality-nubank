@@ -25,6 +25,7 @@ where k is the length of the shortest path from the "fraudulent" customer to the
 
 - Read input file, split by space, create graph structure
 - Implement [Floyd-Warshall algorithm](https://en.wikipedia.org/wiki/Floyd%E2%80%93Warshall_algorithm). Maybe could be simplified since edge weight == 1
+- Use [breadth first search](https://en.wikipedia.org/wiki/Breadth-first_search), probably better than Floyd-Warshall
 - Each time a vertex is added, the closeness of each vertex must be recalculated. Can we optmize it?? 
 - When a fraud is detected, must recalculate closeness of each vertex. Can we optimize it??
 
