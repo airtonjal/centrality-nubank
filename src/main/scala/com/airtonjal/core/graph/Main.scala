@@ -11,6 +11,12 @@ object Main {
 
     val graph = GraphBuilder.createGraph(edges)
 
+    graph.edges.foreach(println(_))
+
+    println
+
+    (graph + Edge(1, 6)).edges.foreach(println(_))
+
 //    println(graph.isAdjacent(0, 1))
 //    println(graph.isAdjacent(1, 0))
   }
