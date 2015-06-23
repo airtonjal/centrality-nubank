@@ -1,6 +1,6 @@
 package com.airtonjal.core.graph
 
-import scala.collection.mutable
+import scala.collection.{SortedMap, mutable}
 
 /**
  * Closeness centrality implementation
@@ -11,9 +11,9 @@ trait ClosenessCentrality {
   /**
    * Solves the closeness centrality problem
    * @param graph The graph
-   * @return A sorted set with a tuple containing the vertex id and the score
+   * @return A sorted sequence with a tuple containing the vertex id and the score
    */
-  def calculateScores(graph: Graph): Map[Int, Int]
+  def calculateScores(graph: Graph): Seq[(Int, Float)]
 
   /**
    * Calculates the distances from a given vertex to every other in the graph
@@ -24,7 +24,7 @@ trait ClosenessCentrality {
   def distances(graph: Graph, vertex: Int): scala.collection.immutable.Map[Int, Int]
 
   def farness(graph: Graph, v: Int) = distances(graph, v).values.sum
-  def closeness(graph: Graph, v: Int) = 1 / farness(graph, v)
+  def closeness(graph: Graph, v: Int) = 1f / farness(graph, v)
 
 }
 
@@ -41,7 +41,7 @@ class BreadthFirstSearch(graph: Graph) extends ClosenessCentrality {
     while(queue.nonEmpty) {
       val v = queue.dequeue()
       visited += v
-      val adjacents = graph.edges(v)
+      val adjacents: Set[Int] = graph.edges(v)
 
       // Found a path, accounts distance
       adjacents.foreach(vertex => distanceMap += vertex -> distance)
@@ -56,6 +56,6 @@ class BreadthFirstSearch(graph: Graph) extends ClosenessCentrality {
   }
 
   /** {@inheritdoc} */
-  override def calculateScores(graph: Graph) = graph.edges.keys.map(v => v -> closeness(graph, v)).toMap
+  override def calculateScores(graph: Graph) = graph.edges.keys.map(v => v -> farness(graph, v).toFloat).toSeq.sortBy(_._2)
 
 }
