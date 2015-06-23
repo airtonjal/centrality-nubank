@@ -2,10 +2,12 @@ package com.airtonjal.core.graph
 
 import scalaz.Scalaz._
 
-case class Edge(v1: Int, v2: Int)
+case class Edge(v1: Int, v2: Int) {
+  def equals(e: Edge) = (e.v1 == v1 && e.v2 == v2) || (e.v1 == v2 && e.v2 == v1)
+}
 
 /**
- * A graph data structure
+ * A immutable graph data structure
  * @param edges Graph edges. Given a vertex identifier, returns a set of adjacent vertexes identifiers
  */
 class Graph(val edges: Map[Int, Set[Int]]) {
@@ -15,7 +17,7 @@ class Graph(val edges: Map[Int, Set[Int]]) {
    * @param edge The new edge
    * @return A new Graph containing the edge. The same graph if the Edge already existed
    */
-  def +(edge: Edge) : Graph = {
+  def +(edge: Edge): Graph = {
     require(edge.v1 != edge.v2, "Edge vertexes are the same")
 
     new Graph(
@@ -25,8 +27,9 @@ class Graph(val edges: Map[Int, Set[Int]]) {
     )
   }
 
-  def isAdjacent(v1: Int, v2: Int) = edges.contains(v1) && edges(v1).contains(v2)
+  def adjacent(v1: Int, v2: Int) = edges.contains(v1) && edges(v1).contains(v2)
 
+  override def toString = edges.mkString("\n")
 }
 
 /**

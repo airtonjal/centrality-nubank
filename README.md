@@ -21,6 +21,13 @@ F(k) = (1 - (1/2)^k)
 
 where k is the length of the shortest path from the "fraudulent" customer to the customer in question.
 
+# Rules and assumptions
+
+- Edge weight == 1
+- edges.txt must be read and loaded when the application starts
+- REST server might receive new vertexes, not necessarily existed previously
+- The graph is not necessarily connected
+
 # Initial solution / brainstorm
 
 - Read input file, split by space, create graph structure

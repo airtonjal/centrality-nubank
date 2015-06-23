@@ -1,12 +1,28 @@
 package com.airtonjal.core.graph
 
+import scala.io.Source
+
 /**
- * Created by airton on 6/18/15.
- * @author <a href="mailto:airton.liborio@webradar.com">Airton Libório</a>
+ * Application entry point
+ * @author <a href="mailto:airtonjal@gmail.com">Airton Libório</a>
  */
 object Main {
 
-  def main(args: Array[String]) {
+  val FILENAME = "edges.txt"
+
+  def main (args: Array[String]): Unit = {
+    val stream = Source.fromURL(Source.getClass().getResource("/" + FILENAME))
+    val edgeSeq = stream.getLines.toSeq.map(line => line.split(" +")).map(v => Edge(v(0).toInt, v(1).toInt))
+
+    val graph = GraphBuilder.createGraph(edgeSeq)
+    print(graph)
+
+
+//    BreadthFirstSearch.closenessCentrality(graph)
+    new BreadthFirstSearch(graph).distances(graph, graph.edges.head._1)
+  }
+
+  def test() {
     val edges = Seq(Edge(0, 1), Edge(1, 0), Edge(1, 0), Edge(4, 5), Edge(2, 3), Edge(3, 1))
 
     val graph = GraphBuilder.createGraph(edges)
