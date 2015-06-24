@@ -26,3 +26,7 @@ libraryDependencies ++= Seq(
   "io.spray" %% "spray-testkit" % sprayVersion % "test",
   "org.scalatest" %% "scalatest" % "2.2.5" % "test"
 )
+
+Revolver.settings
+
+mainClass in Revolver.reStart := Some("com.airtonjal.Bootstrap")

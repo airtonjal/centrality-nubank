@@ -11,9 +11,8 @@ object Main {
   val FILENAME = "edges.txt"
 
   def main (args: Array[String]): Unit = {
-    val stream = Source.fromURL(Source.getClass().getResource("/" + FILENAME))
+    val stream = Source.fromURL(getClass().getResource("/" + FILENAME))
     val edgeSeq = stream.getLines.toSeq.map(line => line.split(" +")).map(v => Edge(v(0).toInt, v(1).toInt))
-
 
     val graph = GraphBuilder.createGraph(Seq(Edge(4, 5), Edge(1, 2), Edge(2, 3), Edge(1, 3)))
     println(graph)

@@ -7,13 +7,13 @@ case class Edge(v1: Int, v2: Int) {
 }
 
 /**
- * A immutable graph data structure
+ * An immutable graph data structure
  * @param adjacencyMap Graph adjacency map. Given a vertex identifier, returns a set of adjacent vertexes identifiers
  */
 class Graph(val adjacencyMap: Map[Int, Set[Int]]) {
 
   /**
-   * Adds a new edge
+   * Adds a new edge to the graph, immutable
    * @param edge The new edge
    * @return A new Graph containing the edge. The same graph if the Edge already existed
    */

@@ -1,5 +1,7 @@
 package com.airtonjal.core.graph
 
+import com.airtonjal.core.Score
+
 import scala.collection.mutable
 
 /**
@@ -13,7 +15,7 @@ trait ClosenessCentrality {
    * @param graph The graph
    * @return A sorted sequence with a tuple containing the vertex id and the score
    */
-  def calculateScores(graph: Graph): Seq[(Int, Float)]
+  def calculateScores(graph: Graph): Seq[Score]
 
   /**
    * Calculates the distances from a given vertex to every other in the graph
@@ -23,13 +25,37 @@ trait ClosenessCentrality {
    */
   def distances(graph: Graph, vertex: Int): scala.collection.immutable.Map[Int, Int]
 
-  def farness(graph: Graph, v: Int) = distances(graph, v).values.sum
-  def farnessScores(graph: Graph) =
-    graph.adjacencyMap.keys.map(v => v -> farness(graph, v).toFloat).toSeq.sortBy(_._2)
+  /**
+   * Calculates the farness score of a given vertex
+   * @param graph The graph
+   * @param v The vertex
+   * @return The farness score
+   */
+  def farness(graph: Graph, v: Int): Int = distances(graph, v).values.sum
 
-  def closeness(graph: Graph, v: Int) = 1f / farness(graph, v)
-  def closenessScores(graph: Graph) =
-    graph.adjacencyMap.keys.map(v => v -> closeness(graph, v)).toSeq.sortBy(_._2)
+  /**
+   * Calculates the farness scores of each vertex
+   * @param graph The graph
+   * @return A sorted sequence of scores by farness
+   */
+  def farnessScores(graph: Graph): Seq[Score] =
+    graph.adjacencyMap.keys.map(v => Score(v, farness(graph, v).toFloat)).toSeq.sortBy(_.score)
+
+  /**
+   * Calculates the closeness score of a given vertex
+   * @param graph The graph
+   * @param v The vertex
+   * @return The closeness score
+   */
+  def closeness(graph: Graph, v: Int): Float = 1f / farness(graph, v)
+
+  /**
+   * Calculates the closeness scores of each vertex
+   * @param graph The graph
+   * @return A sorted sequence of scores by closeness
+   */
+  def closenessScores(graph: Graph): Seq[Score] =
+    graph.adjacencyMap.keys.map(v => Score(v, closeness(graph, v))).toSeq.sortBy(_.score).reverse
 
 }
 
