@@ -8,9 +8,9 @@ case class Edge(v1: Int, v2: Int) {
 
 /**
  * A immutable graph data structure
- * @param edges Graph edges. Given a vertex identifier, returns a set of adjacent vertexes identifiers
+ * @param adjacencyMap Graph adjacency map. Given a vertex identifier, returns a set of adjacent vertexes identifiers
  */
-class Graph(val edges: Map[Int, Set[Int]]) {
+class Graph(val adjacencyMap: Map[Int, Set[Int]]) {
 
   /**
    * Adds a new edge
@@ -21,20 +21,17 @@ class Graph(val edges: Map[Int, Set[Int]]) {
     require(edge.v1 != edge.v2, "Edge vertexes are the same")
 
     new Graph(
-      edges ++
-        Map(edge.v1 -> (edges.getOrElse(edge.v1, Set.empty[Int]) + edge.v2)) ++
-        Map(edge.v2 -> (edges.getOrElse(edge.v2, Set.empty[Int]) + edge.v1))
+      adjacencyMap ++
+        Map(edge.v1 -> (adjacencyMap.getOrElse(edge.v1, Set.empty[Int]) + edge.v2)) ++
+        Map(edge.v2 -> (adjacencyMap.getOrElse(edge.v2, Set.empty[Int]) + edge.v1))
     )
   }
 
-  def adjacent(v1: Int, v2: Int) = edges.contains(v1) && edges(v1).contains(v2)
+  def adjacent(v1: Int, v2: Int) = adjacencyMap.contains(v1) && adjacencyMap(v1).contains(v2)
 
-  override def toString = edges.mkString("\n")
+  override def toString = adjacencyMap.mkString("\n")
 }
 
-/**
- * Creates a graph given its set of edges
- */
 object GraphBuilder {
 
   def createGraph(edges : Seq[Edge]): Graph = {
