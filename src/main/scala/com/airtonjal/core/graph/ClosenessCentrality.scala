@@ -1,6 +1,6 @@
 package com.airtonjal.core.graph
 
-import scala.collection.{SortedMap, mutable}
+import scala.collection.mutable
 
 /**
  * Closeness centrality implementation
@@ -24,12 +24,17 @@ trait ClosenessCentrality {
   def distances(graph: Graph, vertex: Int): scala.collection.immutable.Map[Int, Int]
 
   def farness(graph: Graph, v: Int) = distances(graph, v).values.sum
+  def farnessScores(graph: Graph) =
+    graph.adjacencyMap.keys.map(v => v -> farness(graph, v).toFloat).toSeq.sortBy(_._2)
+
   def closeness(graph: Graph, v: Int) = 1f / farness(graph, v)
+  def closenessScores(graph: Graph) =
+    graph.adjacencyMap.keys.map(v => v -> closeness(graph, v)).toSeq.sortBy(_._2)
 
 }
 
 /** Uses breadth first search to calculate the centrality of each vertex */
-class BreadthFirstSearch(graph: Graph) extends ClosenessCentrality {
+class BreadthFirstSearch extends ClosenessCentrality {
 
   /** {@inheritdoc} */
   override def distances(graph: Graph, vertex: Int): scala.collection.immutable.Map[Int, Int] = {
@@ -41,13 +46,13 @@ class BreadthFirstSearch(graph: Graph) extends ClosenessCentrality {
     while(queue.nonEmpty) {
       val v = queue.dequeue()
       visited += v
-      val adjacents: Set[Int] = graph.edges(v)
+      val adjacents: Set[Int] = graph.adjacencyMap(v).diff(visited).diff(distanceMap.keySet)
 
-      // Found a path, accounts distance
-      adjacents.foreach(vertex => distanceMap += vertex -> distance)
-
-      // Enqueues all non-visited adjacent vertexes
-      adjacents.diff(visited).foreach(queue.enqueue(_))
+      // Found a path, sets distance and enqueue vertex
+      adjacents.foreach{ vertex =>
+        distanceMap += vertex -> distance
+        queue.enqueue(vertex)
+      }
 
       distance += 1
     }
@@ -56,6 +61,6 @@ class BreadthFirstSearch(graph: Graph) extends ClosenessCentrality {
   }
 
   /** {@inheritdoc} */
-  override def calculateScores(graph: Graph) = graph.edges.keys.map(v => v -> farness(graph, v).toFloat).toSeq.sortBy(_._2)
+  override def calculateScores(graph: Graph) = closenessScores(graph)
 
 }
