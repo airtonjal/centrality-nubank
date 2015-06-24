@@ -31,17 +31,28 @@ class GraphService(var graph: Graph) extends HttpService with Actor with ActorLo
     pathPrefix("graph") {
       path("list") {
         get {
-          complete(cc.scores)
+          complete {
+            log.info("Listing scores")
+            cc.scores
+          }
         }
       } ~
         path("add" / IntNumber / IntNumber) { (vertex1, vertex2) =>
           post {
-            cc + Edge(vertex1, vertex2)
-            complete("Edge added succesfully")
+            complete {
+              val edge = Edge(vertex1, vertex2)
+              log.info("Adding edge " + edge)
+              cc + edge
+              "Edge " + edge + "added succesfully"
+            }
         }
       } ~ path("fraud" / IntNumber) { vertex =>
         put {
-          cc.fraud(vertex)
+          complete{
+            log.info("Marking node " + vertex + " as fraudulent")
+            cc.fraud(vertex)
+            "Vertex " + vertex +  " marked as fraudulent"
+          }
         }
       }
     }
