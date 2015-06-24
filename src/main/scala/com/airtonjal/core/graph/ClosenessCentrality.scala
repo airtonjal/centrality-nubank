@@ -60,25 +60,22 @@ trait ClosenessCentrality {
 }
 
 /** Uses breadth first search to calculate the centrality of each vertex */
-class BreadthFirstSearch extends ClosenessCentrality {
+class BFS extends ClosenessCentrality {
 
   /** {@inheritdoc} */
-  override def distances(graph: Graph, vertex: Int): scala.collection.immutable.Map[Int, Int] = {
-    val queue       = mutable.Queue[Int](vertex)
+  override def distances(graph: Graph, vertex: Int): Map[Int, Int] = {
+    var around      = mutable.Set[Int](vertex)
     val visited     = mutable.Set.empty[Int]
     val distanceMap = mutable.Map.empty[Int, Int]
 
     var distance = 1
-    while(queue.nonEmpty) {
-      val v = queue.dequeue()
-      visited += v
-      val adjacents: Set[Int] = graph.adjacencyMap(v).diff(visited).diff(distanceMap.keySet)
+    while(around.nonEmpty) {
+      visited ++= around
 
-      // Found a path, sets distance and enqueue vertex
-      adjacents.foreach{ vertex =>
-        distanceMap += vertex -> distance
-        queue.enqueue(vertex)
-      }
+      around = around.flatMap(v => graph.adjacencyMap(v).diff(visited).diff(distanceMap.keySet))
+
+      // Found a path, sets distance
+      around.foreach(vertex => distanceMap += vertex -> distance)
 
       distance += 1
     }
@@ -88,5 +85,68 @@ class BreadthFirstSearch extends ClosenessCentrality {
 
   /** {@inheritdoc} */
   override def calculateScores(graph: Graph) = closenessScores(graph)
+
+}
+
+/** Uses breadth first search to calculate the centrality of each vertex. Keeps state. Not thread safe */
+class BFSWithState(var graph: Graph) extends BFS {
+
+  var distanceMap = mutable.Map.empty[Int, Map[Int, Int]]
+  val fraudSet    = mutable.Set.empty[Int]
+  var scores      = Seq.empty[Score]
+
+  /**
+   * Marks a node as fraudulent
+   * @param v The vertex
+   */
+  def fraud(v: Int): Unit = {
+    fraudSet += v
+    propagateFraud(v)
+  }
+
+  /**
+   * Propagates the effect of having a fraudulent node in the graph
+   * @param v The vertex
+   */
+  private def propagateFraud(v: Int): Unit = {
+    // Recalculates scores
+    scores = scores.map { score =>
+      if (fraudSet.contains(score.vertex)) Score(score.vertex, 0)  // Fraud node, nothing to do
+      else distanceMap(v).get(score.vertex) match {
+        // Connected node, recalculates the score
+        case Some(distance) =>
+          Score(score.vertex, score.score * (1f - math.pow(0.5, distance.toDouble).toFloat))
+        // Non-connected node, does nothing
+        case None => score
+      }
+    }.sortBy(_.score).reverse
+  }
+
+  def +(e: Edge): Unit = {
+    graph = graph + e
+    calculateScores()
+  }
+
+  /**
+   * Calculates all the scores
+   */
+  def calculateScores() = {
+    scores = Seq.empty[Score]
+    distanceMap = mutable.Map.empty[Int, Map[Int, Int]]
+
+    graph.adjacencyMap.keys.foreach(v => distanceMap(v) = distances(graph, v))
+    scores = graph.adjacencyMap.keys.map(v => Score(v, closeness(graph, v))).toSeq
+    fraudSet.foreach(v => propagateFraud(v))
+  }
+
+//  // These are not yet implemented
+//  override def farness(graph: Graph, v: Int) =
+//    throw new NotImplementedError("This method is only implemented in ancestor classes")
+//  override def farnessScores(graph: Graph) =
+//    throw new NotImplementedError("This method is only implemented in ancestor classes")
+//  override def closeness(graph: Graph, v: Int) =
+//    throw new NotImplementedError("This method is only implemented in ancestor classes")
+//  override def closenessScores(graph: Graph) =
+//    throw new NotImplementedError("This method is only implemented in ancestor classes")
 
 }
