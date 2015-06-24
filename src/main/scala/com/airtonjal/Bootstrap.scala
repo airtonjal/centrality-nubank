@@ -1,10 +1,9 @@
 package com.airtonjal
 
-
-import akka.actor.{Props, ActorSystem}
+import akka.actor.{ActorSystem, Props}
 import akka.event.Logging
 import akka.io.IO
-import com.airtonjal.core.graph.{GraphBuilder, Edge}
+import com.airtonjal.core.graph.{Edge, GraphBuilder}
 import com.airtonjal.service.GraphService
 import spray.can.Http
 
@@ -24,6 +23,7 @@ object Bootstrap extends App {
   implicit val system = ActorSystem("graph-REST-service")
   val log = Logging(system, getClass)
 
+  // Our service implementation
   val graphService = system.actorOf(Props(new GraphService(graph)), "graph-service")
 
   // Starts http server, hardcoded properties only for the sake of demonstration

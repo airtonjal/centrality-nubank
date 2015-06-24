@@ -18,7 +18,7 @@ object Main {
     println(graph)
 //    BreadthFirstSearch.closenessCentrality(graph)
 //    new BreadthFirstSearch(graph).distances(graph, graph.edges.head._1)
-    print(new BreadthFirstSearch().farnessScores(graph).mkString("\n"))
+    print(new BFS().farnessScores(graph).mkString("\n"))
   }
 
 }
