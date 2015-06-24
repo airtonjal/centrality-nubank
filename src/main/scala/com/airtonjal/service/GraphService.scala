@@ -1,10 +1,10 @@
 package com.airtonjal.service
 
-import akka.actor.{ActorLogging, Actor, ActorRefFactory}
-import com.airtonjal.core.graph.{BreadthFirstSearch, Edge, Graph}
+import akka.actor.{Actor, ActorLogging, ActorRefFactory}
+import com.airtonjal.core.graph.{BFSWithState, Edge, Graph}
 import org.json4s.{DefaultFormats, Formats}
 import spray.httpx.Json4sSupport
-import spray.routing.{RoutingSettings, RejectionHandler, ExceptionHandler, HttpService}
+import spray.routing.{ExceptionHandler, HttpService, RejectionHandler, RoutingSettings}
 import spray.util.LoggingContext
 
 /* Used to mix in Spray's Marshalling Support with json4s */
@@ -20,25 +20,28 @@ class GraphService(var graph: Graph) extends HttpService with Actor with ActorLo
   override def receive: Receive = runRoute(listRoute)(ExceptionHandler.default, RejectionHandler.Default, context,
     RoutingSettings.default, LoggingContext.fromActorRefFactory)
 
+  def actorRefFactory: ActorRefFactory = context
+
   import Json4sProtocol._
 
-  def actorRefFactory: ActorRefFactory = context
+  val cc = new BFSWithState(graph)
+  cc.calculateScores()
 
   val listRoute = {
     pathPrefix("graph") {
       path("list") {
         get {
-          complete(new BreadthFirstSearch().calculateScores(graph))
+          complete(cc.scores)
         }
       } ~
         path("add" / IntNumber / IntNumber) { (vertex1, vertex2) =>
           post {
-            graph = graph + Edge(vertex1, vertex2)
+            cc + Edge(vertex1, vertex2)
             complete("Edge added succesfully")
         }
       } ~ path("fraud" / IntNumber) { vertex =>
         put {
-          complete("To be implemented")
+          cc.fraud(vertex)
         }
       }
     }
