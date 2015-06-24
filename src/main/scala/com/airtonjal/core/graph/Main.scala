@@ -14,27 +14,12 @@ object Main {
     val stream = Source.fromURL(Source.getClass().getResource("/" + FILENAME))
     val edgeSeq = stream.getLines.toSeq.map(line => line.split(" +")).map(v => Edge(v(0).toInt, v(1).toInt))
 
-    val graph = GraphBuilder.createGraph(edgeSeq)
-    print(graph)
 
-
+    val graph = GraphBuilder.createGraph(Seq(Edge(4, 5), Edge(1, 2), Edge(2, 3), Edge(1, 3)))
+    println(graph)
 //    BreadthFirstSearch.closenessCentrality(graph)
-    new BreadthFirstSearch(graph).distances(graph, graph.edges.head._1)
-  }
-
-  def test() {
-    val edges = Seq(Edge(0, 1), Edge(1, 0), Edge(1, 0), Edge(4, 5), Edge(2, 3), Edge(3, 1))
-
-    val graph = GraphBuilder.createGraph(edges)
-
-    graph.edges.foreach(println(_))
-
-    println
-
-    (graph + Edge(1, 6)).edges.foreach(println(_))
-
-//    println(graph.isAdjacent(0, 1))
-//    println(graph.isAdjacent(1, 0))
+//    new BreadthFirstSearch(graph).distances(graph, graph.edges.head._1)
+    print(new BreadthFirstSearch().farnessScores(graph).mkString("\n"))
   }
 
 }
