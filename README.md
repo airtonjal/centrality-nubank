@@ -48,6 +48,10 @@ To run the application and star the REST server:
 sbt run
 ```
 
+The shell output should be something like the following:
+
+![ScalaTest shell output](img/tests.png)
+
 ## Initial solution / brainstorm
 
 - Implement [Floyd-Warshall algorithm](https://en.wikipedia.org/wiki/Floyd%E2%80%93Warshall_algorithm). Maybe could be simplified since edge weight == 1
