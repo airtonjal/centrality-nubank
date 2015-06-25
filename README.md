@@ -74,7 +74,7 @@ The shell output should be something like the following:
 
 | Service | Description                        | Path            | Method | Return                                                                                                                                                            |
 |---------|------------------------------------|-----------------|--------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| List    | Lists the vertex sorted by score   | /graph/list     | GET    | A JSON like the following: ```json [   {"vertex":90,"score":0.005586592},   {"vertex":16,"score":0.005291005},   {"vertex":74,"score":0.0058479533},    ... ] ``` |
+| List    | Lists the vertex sorted by score   | /graph/list     | GET    | A JSON like the following: ```[ {"vertex":90,"score":0.005586592}, {"vertex":16,"score":0.005291005}, {"vertex":74,"score":0.0058479533}, ... ]``` |
 | Add     | Adds a new edge to the graph       | /edge/{v1}/{v2} | POST   | A string confirming the edge was added                                                                                                                            |
 | Fraud   | Signalizes a vertex as fraudulent  | /fraud/{v}      | PUT    | A string confirming the vertex was marked                                                                                                                         |
 
