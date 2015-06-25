@@ -72,6 +72,8 @@ The shell output should be something like the following:
 
 ## REST Services
 
+Services are invoked through http requests. The data format is [JSON](http://json.org/). The following table describes the services:
+
 | Service | Description                        | Path            | Method | Return                                                                                                                                                   |
 |---------|------------------------------------|-----------------|--------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
 | List    | Lists the vertex sorted by score   | /graph/list     | GET    | A JSON like the following: ```[ {"vertex":44,"score":0.005988024}, {"vertex":88,"score":0.00591716}, {"vertex":33,"score":0.005882353} ... ]``` |
