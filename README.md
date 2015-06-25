@@ -45,6 +45,7 @@ where k is the length of the shortest path from the "fraudulent" customer to the
 - [SBT](http://www.scala-sbt.org/) 0.13.0
 - [Spray.io](http://spray.io/) 1.3.2
 - [Akka](http://akka.io/) 2.3.6
+- [ScalaTest](http://scalatest.org/) 2.2.5
 
 ## Building, testing and running 
 
@@ -60,7 +61,7 @@ To run the application and start the REST server:
 sbt run
 ```
 
-To run tests:
+To run tests (developed with ScalaTest):
 
 ```shell
 sbt test
