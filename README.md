@@ -1,7 +1,7 @@
 # centrality-nubank
 A simple RESTful server application to solve the graph centrality problem
 
-# Problem description
+## Problem description
 
 In this challenge, suppose we are looking to do social network analysis for prospective customers. We want to extract from their social network a metric called "closeness centrality".
 
@@ -21,16 +21,35 @@ F(k) = (1 - (1/2)^k)
 
 where k is the length of the shortest path from the "fraudulent" customer to the customer in question.
 
-# Rules and assumptions
+## Rules and assumptions
 
 - Edge weight == 1
 - edges.txt must be read and loaded when the application starts
 - REST server might receive new vertexes, not necessarily existed previously
 - The graph is not necessarily connected
 
-# Initial solution / brainstorm
+## Building, testing and running
 
-- Read input file, split by space, create graph structure
+The application uses Scala's [SBT](http://www.scala-sbt.org/) tool. To build it, cd to the project root dir and type
+
+```shell
+sbt compile
+```
+
+To run tests:
+
+```shell
+sbt test
+```
+
+To run the application and star the REST server:
+
+```shell
+sbt run
+```
+
+## Initial solution / brainstorm
+
 - Implement [Floyd-Warshall algorithm](https://en.wikipedia.org/wiki/Floyd%E2%80%93Warshall_algorithm). Maybe could be simplified since edge weight == 1
 - Use [breadth first search](https://en.wikipedia.org/wiki/Breadth-first_search), probably better than Floyd-Warshall
 - Each time a vertex is added, the closeness of each vertex must be recalculated. Can we optmize it?? 

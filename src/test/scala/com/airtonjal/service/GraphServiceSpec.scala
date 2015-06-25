@@ -22,10 +22,10 @@ class GraphServiceSpec extends FlatSpec with ScalatestRouteTest with Matchers {
     }
   }
 
-  "Graph service" should "add edges" in {
-    Post("/graph/list/add/1/2") ~> graphService.graphRoute ~> check {
-      status should equal(StatusCodes.OK)
-    }
-  }
+//  "Graph service" should "add edges" in {
+//    Post("/graph/list/add/1/2") ~> graphService.graphRoute ~> check {
+//      status should equal(StatusCodes.OK)
+//    }
+//  }
 
 }
