@@ -32,9 +32,9 @@ where k is the length of the shortest path from the "fraudulent" customer to the
 
 ## Solution
 
-- Read edges.txt, create an adjacency map (given a vertex returns adjacent vertex)
+- Read edges.txt, create an adjacency map (given a vertex returns adjacent vertexes)
 - Implement [Breadth First Search](https://en.wikipedia.org/wiki/Breadth-first_search) to find the shortest paths of a vertex to every other in the graph
-- Use BFS for all vertexes, put the result in a map, calculate and sort closeness
+- Use [BFS](https://en.wikipedia.org/wiki/Breadth-first_search) for all vertexes, put the result in a map, calculate and sort closeness
 - When a fraud is signalized, recalculate and sort the closeness of every connected node
 - When an edge is added, recalculate and sort the closeness of the whole graph
 
@@ -48,10 +48,16 @@ where k is the length of the shortest path from the "fraudulent" customer to the
 
 ## Building, testing and running 
 
-The application uses Scala's [SBT](http://www.scala-sbt.org/) tool. To build it, cd to the project root dir and type
+The application uses Scala's [SBT](http://www.scala-sbt.org/) tool. To build it, cd to the project root dir and type:
 
 ```shell
-sbt compile
+sbt package 
+```
+
+To run the application and start the REST server:
+
+```shell
+sbt run
 ```
 
 To run tests:
@@ -60,15 +66,17 @@ To run tests:
 sbt test
 ```
 
-To run the application and star the REST server:
-
-```shell
-sbt run
-```
-
 The shell output should be something like the following:
 
 ![ScalaTest shell output](img/tests.png)
+
+## REST Services
+
+| Service | Description                        | Path            | Method | Return                                                                                                                                                            |
+|---------|------------------------------------|-----------------|--------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| List    | Lists the vertex sorted by score   | /graph/list     | GET    | A JSON like the following: ```json [   {"vertex":90,"score":0.005586592},   {"vertex":16,"score":0.005291005},   {"vertex":74,"score":0.0058479533},    ... ] ``` |
+| Add     | Adds a new edge to the graph       | /edge/{v1}/{v2} | POST   | A string confirming the edge was added                                                                                                                            |
+| Fraud   | Signalizes a vertex as fraudulent  | /fraud/{v}      | PUT    | A string confirming the vertex was marked                                                                                                                         |
 
 ### Initial thoughts / brainstorm
 
