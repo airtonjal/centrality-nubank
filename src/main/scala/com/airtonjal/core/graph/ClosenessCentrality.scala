@@ -102,6 +102,7 @@ class BFSWithState(var graph: Graph) extends BFS {
   def fraud(v: Int): Unit = {
     fraudSet += v
     propagateFraud(v)
+    scores = scores.sortBy(_.score).reverse
   }
 
   /**
@@ -119,7 +120,7 @@ class BFSWithState(var graph: Graph) extends BFS {
         // Non-connected node, does nothing
         case None => score
       }
-    }.sortBy(_.score).reverse
+    }
   }
 
   def +(e: Edge): Unit = {
@@ -137,6 +138,7 @@ class BFSWithState(var graph: Graph) extends BFS {
     graph.adjacencyMap.keys.foreach(v => distanceMap(v) = distances(graph, v))
     scores = graph.adjacencyMap.keys.map(v => Score(v, closeness(graph, v))).toSeq
     fraudSet.foreach(v => propagateFraud(v))
+    scores = scores.sortBy(_.score).reverse
   }
 
 //  // These are not yet implemented
