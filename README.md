@@ -28,7 +28,15 @@ where k is the length of the shortest path from the "fraudulent" customer to the
 - REST server might receive new vertexes, not necessarily existed previously
 - The graph is not necessarily connected
 
-## Building, testing and running
+## Dependencies
+
+- [JDK](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html) 7
+- [Scala](http://www.scala-lang.org/) 2.10.5
+- [SBT](http://www.scala-sbt.org/) 0.13.0
+- [Spray.io](http://spray.io/) 1.3.2
+- [Akka](http://akka.io/) 2.3.6
+
+## Building, testing and running 
 
 The application uses Scala's [SBT](http://www.scala-sbt.org/) tool. To build it, cd to the project root dir and type
 
