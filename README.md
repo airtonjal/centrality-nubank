@@ -1,6 +1,8 @@
 # centrality-nubank
 A simple RESTful server application to solve the graph centrality problem
 
+![A cool looking graph :)](img/graph.png)
+
 ## Problem description
 
 In this challenge, suppose we are looking to do social network analysis for prospective customers. We want to extract from their social network a metric called "closeness centrality".
