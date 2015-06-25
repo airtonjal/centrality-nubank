@@ -30,6 +30,14 @@ where k is the length of the shortest path from the "fraudulent" customer to the
 - REST server might receive new vertexes, not necessarily existed previously
 - The graph is not necessarily connected
 
+## Solution
+
+- Read edges.txt, create an adjacency map (given a vertex returns adjacent vertex)
+- Implement [Breadth First Search](https://en.wikipedia.org/wiki/Breadth-first_search) to find the shortest paths of a vertex to every other in the graph
+- Use BFS for all vertexes, put the result in a map, calculate and sort closeness
+- When a fraud is signalized, recalculate and sort the closeness of every connected node
+- When an edge is added, recalculate and sort the closeness of the whole graph
+
 ## Dependencies
 
 - [JDK](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html) 7
@@ -62,7 +70,7 @@ The shell output should be something like the following:
 
 ![ScalaTest shell output](img/tests.png)
 
-## Initial solution / brainstorm
+### Initial thoughts / brainstorm
 
 - Implement [Floyd-Warshall algorithm](https://en.wikipedia.org/wiki/Floyd%E2%80%93Warshall_algorithm). Maybe could be simplified since edge weight == 1
 - Use [breadth first search](https://en.wikipedia.org/wiki/Breadth-first_search), probably better than Floyd-Warshall
