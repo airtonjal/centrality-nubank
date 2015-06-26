@@ -75,11 +75,16 @@ The shell output should be something like the following:
 
 Services are invoked through http requests. The data format is [JSON](http://json.org/). The following table describes the services:
 
-| Service | Description                        | Path            | Method | Return                                                                                                                                                   |
-|---------|------------------------------------|-----------------|--------|----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Service | Description                        | Path            | Method | Return                                                                                                                                          |
+|---------|------------------------------------|-----------------|--------|-------------------------------------------------------------------------------------------------------------------------------------------------|
 | List    | Lists the vertex sorted by score   | /graph/list     | GET    | A JSON like the following: ```[ {"vertex":44,"score":0.005988024}, {"vertex":88,"score":0.00591716}, {"vertex":33,"score":0.005882353} ... ]``` |
-| Add     | Adds a new edge to the graph       | /edge/{v1}/{v2} | POST   | A string confirming the edge was added                                                                                                                   |
-| Fraud   | Signalizes a vertex as fraudulent  | /fraud/{v}      | PUT    | A string confirming the vertex was marked                                                                                                                |
+| Add     | Adds a new edge to the graph       | /edge/{v1}/{v2} | POST   | A string confirming the edge was added                                                                                                          |
+| Fraud   | Signalizes a vertex as fraudulent  | /fraud/{v}      | PUT    | A string confirming the vertex was marked                                                                                                       |
+
+## TODO
+
+- Implement core functionality as an [Akka Actor](http://doc.akka.io/docs/akka/snapshot/scala/actors.html)
+- Avoid recalculating the whole graph closeness when an edge is added
 
 ### Initial thoughts / brainstorm
 
