@@ -1,8 +1,8 @@
-organization in ThisBuild := "com.netaporter"
+organization in ThisBuild := "com.airtonjal"
 
-name := "spray-apr"
+name := "centrality-nubank"
 
-version := "1.0"
+version := "0.1"
 
 scalaVersion  := "2.10.5"
 

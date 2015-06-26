@@ -1,7 +1,6 @@
 logLevel := Level.Warn
 
 addSbtPlugin("io.spray" % "sbt-revolver" % "0.7.2")
-//addSbtPlugin("org.ensime" % "ensime-sbt-cmd" % "0.1.2")%
 
 addSbtPlugin("com.jsuereth" % "sbt-pgp" % "1.0.0")
 
