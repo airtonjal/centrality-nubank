@@ -3,11 +3,8 @@ package com.airtonjal
 import akka.actor.{ActorSystem, Props}
 import akka.event.Logging
 import akka.io.IO
-import com.airtonjal.core.graph.{Edge, GraphBuilder}
 import com.airtonjal.service.GraphServiceImpl
 import spray.can.Http
-
-import scala.io.Source
 
 /**
  * Application entry point

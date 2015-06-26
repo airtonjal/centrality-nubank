@@ -23,7 +23,7 @@ F(k) = (1 - (1/2)^k)
 
 where k is the length of the shortest path from the "fraudulent" customer to the customer in question.
 
-## Rules and assumptions
+### Rules and assumptions
 
 - Edge weight == 1
 - edges.txt must be read and loaded when the application starts
@@ -37,15 +37,6 @@ where k is the length of the shortest path from the "fraudulent" customer to the
 - Use [BFS](https://en.wikipedia.org/wiki/Breadth-first_search) for all vertexes, put the result in a map, calculate and sort closeness
 - When a fraud is signalized, recalculate and sort the closeness of every connected node
 - When an edge is added, recalculate and sort the closeness of the whole graph
-
-## Dependencies
-
-- [JDK](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html) 7
-- [Scala](http://www.scala-lang.org/) 2.10.5
-- [SBT](http://www.scala-sbt.org/) 0.13.0
-- [Spray.io](http://spray.io/) 1.3.2
-- [Akka](http://akka.io/) 2.3.6
-- [ScalaTest](http://scalatest.org/) 2.2.5
 
 ## Building, testing and running 
 
@@ -71,6 +62,15 @@ The shell output should be something like the following:
 
 ![ScalaTest shell output](img/tests.png)
 
+## Dependencies
+
+- [JDK](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html) 7
+- [Scala](http://www.scala-lang.org/) 2.10.5
+- [SBT](http://www.scala-sbt.org/) 0.13.0
+- [Spray.io](http://spray.io/) 1.3.2
+- [Akka](http://akka.io/) 2.3.6
+- [ScalaTest](http://scalatest.org/) 2.2.5
+
 ## REST Services
 
 Services are invoked through http requests. The data format is [JSON](http://json.org/). The following table describes the services:
@@ -83,7 +83,7 @@ Services are invoked through http requests. The data format is [JSON](http://jso
 
 ## TODO
 
-- Implement core functionality as an [Akka Actor](http://doc.akka.io/docs/akka/snapshot/scala/actors.html)
+- Implement core functionality using [Akka Actors](http://doc.akka.io/docs/akka/snapshot/scala/actors.html)
 - Avoid recalculating the whole graph closeness when an edge is added
 
 ### Initial thoughts / brainstorm
