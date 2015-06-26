@@ -85,6 +85,7 @@ Services are invoked through http requests. The data format is [JSON](http://jso
 
 - Implement core functionality using [Akka Actors](http://doc.akka.io/docs/akka/snapshot/scala/actors.html)
 - Avoid recalculating the whole graph closeness when an edge is added
+- Use a dependency injection framework like [Scaldi](http://scaldi.org/) or [Guice](https://github.com/codingwell/scala-guice)
 
 ### Initial thoughts / brainstorm
 
